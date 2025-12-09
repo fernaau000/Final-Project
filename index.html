@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ST Final — LSTM next-step prediction (TF.js)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>ST Final — LSTM next-step prediction (TF.js)</h1>
+  </header>
+
+  <main>
+    <section id="dataset-section" class="card">
+      <h2>Dataset</h2>
+      <div class="controls">
+        <label>Samples: <input id="samples" type="number" value="2000" min="1" /></label>
+        <label>Sequence length (n): <input id="seqLen" type="number" value="50" min="1" /></label>
+        <label>Noise std: <input id="noiseStd" type="number" step="0.001" value="0.05" min="0" max="1" /></label>
+        <label>Seed (optional): <input id="seed" type="text" placeholder="42 or empty" /></label>
+      </div>
+      <div class="controls">
+        <label>Amp min: <input id="ampMin" type="number" step="0.001" value="0.5" /></label>
+        <label>Amp max: <input id="ampMax" type="number" step="0.001" value="1.5" /></label>
+        <label>Freq min: <input id="freqMin" type="number" step="0.001" value="0.5" /></label>
+        <label>Freq max: <input id="freqMax" type="number" step="0.001" value="3.0" /></label>
+      </div>
+      <div class="controls">
+        <button id="genBtn">Generate dataset</button>
+        <button id="downloadBtn">Download JSON</button>
+        <label>Show k samples: <input id="showK" type="number" value="3" min="1" /></label>
+        <label>Start index: <input id="startIdx" type="number" value="0" min="0" /></label>
+        <label><input id="overlap" type="checkbox" /> Overlap on one plot</label>
+      </div>
+      <pre class="stats" id="datasetStats">No dataset yet.</pre>
+      <div class="sample-controls">
+        <button id="prevSample">Prev</button>
+        <button id="renderSample">Render</button>
+        <button id="nextSample">Next</button>
+        <button id="randomSample">Random</button>
+      </div>
+      <div id="samplePlot" class="plot"></div>
+    </section>
+
+    <section id="model-section" class="card">
+      <h2>Model & Training</h2>
+      <div class="controls">
+        <label>Units: <input id="units" type="number" value="32" min="1" /></label>
+        <label>Batch size: <input id="batchSize" type="number" value="64" min="1" /></label>
+        <label>Epochs: <input id="epochs" type="number" value="38" min="1" /></label>
+        <label>LR: <input id="lr" type="number" step="0.0001" value="0.001" /></label>
+        <label>Val split: <input id="valSplit" type="number" step="0.01" value="0.1" min="0" max="0.5" /></label>
+      </div>
+      <div class="controls">
+        <button id="startTrain">Start training</button>
+        <button id="stopTrain">Stop training</button>
+      </div>
+      <div id="modelArch" class="stats">Model architecture: not built yet.</div>
+      <div class="plot-row">
+        <div id="trainPlot" class="plot small"></div>
+        <div id="predPlot" class="plot small"></div>
+      </div>
+      <div class="lstm-internals card">
+        <h3>LSTM Internals (concise)</h3>
+        <ul>
+          <li><strong>Forget gate:</strong> decides what to discard from the cell state.</li>
+          <li><strong>Input gate:</strong> decides which new information to store.</li>
+          <li><strong>Cell state update:</strong> combines forget and input to update state.</li>
+          <li><strong>Output gate:</strong> decides which part of the cell state to output.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Built with TensorFlow.js and Plotly — demo</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/seedrandom@3.0.5/seedrandom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.14.0/dist/tf.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
